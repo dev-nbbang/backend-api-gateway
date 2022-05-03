@@ -1,0 +1,17 @@
+server:
+  port: 8800
+spring:
+  application:
+    name: nbbang-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: nbbang-user
+          uri: http://localhost:9000
+          predicates:
+            - Path=/nbbang-user/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8900/eureka
