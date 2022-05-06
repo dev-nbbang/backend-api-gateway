@@ -10,8 +10,13 @@ spring:
           uri: http://localhost:9000
           predicates:
             - Path=/nbbang-user/**
+          filters:
+            - AuthorizationHeaderFilter
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8900/eureka
+
+jwt:
+  secret: sonchsonchsonchsonchsonchsonchsonchsonchsonchsonchsocnhsonchsoncohsconscn
