@@ -46,7 +46,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
     private void addAuthorizationHeaders(ServerHttpRequest request, Map<String, Object> userInfo) {
         request.mutate()
-                .header("USERID", userInfo.get("userid").toString())
+                .header("MEMBERID", userInfo.get("memberId").toString())
                 .header("NICKNAME", userInfo.get("nickname").toString())
                 .build();
     }
