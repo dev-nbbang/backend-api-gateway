@@ -11,7 +11,6 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
@@ -47,7 +46,6 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     private void addAuthorizationHeaders(ServerHttpRequest request, Map<String, Object> userInfo) {
         request.mutate()
                 .header("X-Authorization-Id", userInfo.get("memberId").toString())
-//                .header("X-Authorization-Name", userInfo.get("nickname").toString())
                 .build();
     }
 
