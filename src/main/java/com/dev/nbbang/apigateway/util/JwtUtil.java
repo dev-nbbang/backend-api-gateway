@@ -22,7 +22,6 @@ public class JwtUtil {
         //expiration date < now
         boolean isExpired = !isTokenExpired(token);
         result.put("memberId", extractAllClaims(token).get("memberId", String.class));
-        result.put("nickname", extractAllClaims(token).get("nickname", String.class));
         result.put("isExpired", isExpired);
         System.out.println("parseinfo in getuseroarseinfo: " + result);
         return result;
