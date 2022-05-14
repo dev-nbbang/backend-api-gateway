@@ -7,7 +7,22 @@ spring:
     active: local
   config:
     import: optional:configserver:http://localhost:8197
-
+  rabbitmq:
+    host: 129.154.222.27
+    port: 5672
+    username: nbbang
+    password: nbbang-dev!@#
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "gateway"
+          - "busrefresh"
+  endpoint:
+    gateway:
+      enabled: true
 
 
 #  cloud:
