@@ -2,7 +2,7 @@ server:
   port: 8800
 spring:
   application:
-    name: nbbang-gateway
+    name: nbbang-gateway, jwt-common
   profiles:
     active: local
   config:
