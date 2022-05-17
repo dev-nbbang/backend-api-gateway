@@ -2,43 +2,65 @@ server:
   port: 8800
 spring:
   application:
-    name: nbbang-gateway
-  cloud:
+    name: nbbang-gateway, jwt-common
+  profiles:
+    active: local
+  config:
+    import: optional:configserver:http://localhost:8197
+  rabbitmq:
+    host: 129.154.222.27
+    port: 5672
+    username: nbbang
+    password: nbbang-dev!@#
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "gateway"
+          - "busrefresh"
+  endpoint:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "http://localhost:8800"
-            allow-credentials: true
-            allowedHeaders:
-              - x-requested-with
-              - authorization
-              - content-type
-              - credential
-              - X-AUTH-TOKEN
-              - X-CSRF-TOKEN
-            allowedMethods:
-              - POST
-              - GET
-              - PUT
-              - DELETE
-      routes:
-        - id: nbbang-auth
-          uri: http://localhost:9100
-          predicates:
-            - Path=/nbbang-auth/**
+      enabled: true
 
-        - id: nbbang-user
-          uri: http://localhost:9000
-          predicates:
-            - Path=/nbbang-user/**
-          filters:
-            - AuthorizationHeaderFilter
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8900/eureka
-
-jwt:
-  secret: sonchsonchsonchsonchsonchsonchsonchsonchsonchsonchsocnhsonchsoncohsconscn
+#  cloud:
+#    gateway:
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOrigins: "http://localhost:8800"
+#            allow-credentials: true
+#            allowedHeaders:
+#              - x-requested-with
+#              - authorization
+#              - content-type
+#              - credential
+#              - X-AUTH-TOKEN
+#              - X-CSRF-TOKEN
+#            allowedMethods:
+#              - POST
+#              - GET
+#              - PUT
+#              - DELETE
+#      routes:
+#        - id: nbbang-auth
+#          uri: http://localhost:9100
+#          predicates:
+#            - Path=/nbbang-auth/**
+#
+#        - id: nbbang-user
+#          uri: http://localhost:9000
+#          predicates:
+#            - Path=/nbbang-user/**
+#          filters:
+#            - AuthorizationHeaderFilter
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8900/eureka
+#
+#jwt:
+#  secret: sonchsonchsonchsonchsonchsonchsonchsonchsonchsonchsocnhsonchsoncohsconscn
