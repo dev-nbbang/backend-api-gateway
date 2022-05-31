@@ -4,9 +4,9 @@ spring:
   application:
     name: nbbang-gateway, jwt-common
   profiles:
-    active: local
+    active: prod
   config:
-    import: optional:configserver:http://localhost:8197
+    import: optional:configserver:http://129.154.222.27:8197
   rabbitmq:
     host: 129.154.222.27
     port: 5672

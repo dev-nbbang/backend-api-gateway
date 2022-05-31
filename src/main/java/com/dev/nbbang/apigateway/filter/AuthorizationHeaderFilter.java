@@ -28,9 +28,11 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     public AuthorizationHeaderFilter() {
         super(Config.class);
     }
+
     public static class Config {
         // Put configuration properties here
     }
+
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
@@ -56,7 +58,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
     public class MyWebExceptionHandler implements ErrorWebExceptionHandler {
         private String errorCodeMaker(int errorCode) {
-            return "{\"errorCode\":" + errorCode +"}";
+            return "{\"errorCode\":" + errorCode + "}";
         }
 
         @Override
@@ -64,7 +66,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 ServerWebExchange exchange, Throwable ex) {
             int errorCode = 999;
             if (ex.getClass() == NullPointerException.class) {
-                errorCode = 61;
+                errorCode = 100;
             } else if (ex.getClass() == ExpiredJwtException.class) {
                 errorCode = 56;
             } else if (ex.getClass() == MalformedJwtException.class || ex.getClass() == SignatureException.class || ex.getClass() == UnsupportedJwtException.class) {
