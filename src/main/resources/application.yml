@@ -23,7 +23,14 @@ management:
   endpoint:
     gateway:
       enabled: true
-
+# 환경 파일 복호화
+encrypt:
+  key-store:
+    #    내 로컬로 하면 돌아가는데 그러면 서버 배포하면 어케하지..?
+    location: file:///Users/zayson/Desktop/Zayson Project/엔빵/nbbang-config.jks
+    alias: nbbang-config-key
+    password: config-access
+#    location: file:///home/ubuntu/nbbang/key/nbbang-config.jks
 
 #  cloud:
 #    gateway:
