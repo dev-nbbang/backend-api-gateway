@@ -23,44 +23,9 @@ management:
   endpoint:
     gateway:
       enabled: true
-
-
-#  cloud:
-#    gateway:
-#      globalcors:
-#        corsConfigurations:
-#          '[/**]':
-#            allowedOrigins: "http://localhost:8800"
-#            allow-credentials: true
-#            allowedHeaders:
-#              - x-requested-with
-#              - authorization
-#              - content-type
-#              - credential
-#              - X-AUTH-TOKEN
-#              - X-CSRF-TOKEN
-#            allowedMethods:
-#              - POST
-#              - GET
-#              - PUT
-#              - DELETE
-#      routes:
-#        - id: nbbang-auth
-#          uri: http://localhost:9100
-#          predicates:
-#            - Path=/nbbang-auth/**
-#
-#        - id: nbbang-user
-#          uri: http://localhost:9000
-#          predicates:
-#            - Path=/nbbang-user/**
-#          filters:
-#            - AuthorizationHeaderFilter
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8900/eureka
-#
-#jwt:
-#  secret: sonchsonchsonchsonchsonchsonchsonchsonchsonchsonchsocnhsonchsoncohsconscn
+# KeyStore 복호화
+encrypt:
+  key-store:
+    location: file:///home/ubuntu/nbbang/key/nbbang-config.jks
+    password: config-access
+    alias: nbbang-config-key
