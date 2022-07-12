@@ -10,7 +10,9 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
@@ -57,27 +59,37 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     public class MyWebExceptionHandler implements ErrorWebExceptionHandler {
-        private String errorCodeMaker(int errorCode) {
-            return "{\"errorCode\":" + errorCode + "}";
+        private String errorCodeMaker(String message) {
+            return "{\"message\":" + message + "}";
         }
 
         @Override
-        public Mono<Void> handle(
-                ServerWebExchange exchange, Throwable ex) {
-            int errorCode = 999;
-            if (ex.getClass() == NullPointerException.class) {
-                errorCode = 100;
-            } else if (ex.getClass() == ExpiredJwtException.class) {
-                errorCode = 56;
-            } else if (ex.getClass() == MalformedJwtException.class || ex.getClass() == SignatureException.class || ex.getClass() == UnsupportedJwtException.class) {
-                errorCode = 55;
-            } else if (ex.getClass() == IllegalArgumentException.class) {
-                errorCode = 51;
+        public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+
+            HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+            String message = "잘못된 접근입니다.";
+
+            if(ex.getClass() == ExpiredJwtException.class) {
+                message = "만료된 토큰입니다.";
+                httpStatus = HttpStatus.UNAUTHORIZED;
             }
 
-            byte[] bytes = errorCodeMaker(errorCode).getBytes(StandardCharsets.UTF_8);
-            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
-            return exchange.getResponse().writeWith(Flux.just(buffer));
+            ServerHttpResponse response = exchange.getResponse();
+            response.setStatusCode(httpStatus);
+//            int errorCode = 999;
+//            if (ex.getClass() == NullPointerException.class) {
+//                errorCode = 100;
+//            } else if (ex.getClass() == ExpiredJwtException.class) {
+//                errorCode = 56;
+//            } else if (ex.getClass() == MalformedJwtException.class || ex.getClass() == SignatureException.class || ex.getClass() == UnsupportedJwtException.class) {
+//                errorCode = 55;
+//            } else if (ex.getClass() == IllegalArgumentException.class) {
+//                errorCode = 51;
+//            }
+
+            byte[] bytes = errorCodeMaker(message).getBytes(StandardCharsets.UTF_8);
+            DataBuffer buffer = response.bufferFactory().wrap(bytes);
+            return response.writeWith(Flux.just(buffer));
         }
     }
 }
