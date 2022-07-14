@@ -4,9 +4,9 @@ spring:
   application:
     name: nbbang-gateway, jwt-common
   profiles:
-    active: local
+    active: prod
   config:
-    import: optional:configserver:http://localhost:8197
+    import: optional:configserver:http://129.154.222.27:8197
   rabbitmq:
     host: 129.154.222.27
     port: 5672
@@ -23,51 +23,9 @@ management:
   endpoint:
     gateway:
       enabled: true
-# 환경 파일 복호화
+# KeyStore 복호화
 encrypt:
   key-store:
-    #    내 로컬로 하면 돌아가는데 그러면 서버 배포하면 어케하지..?
-    location: file:///Users/zayson/Desktop/Zayson Project/엔빵/nbbang-config.jks
-    alias: nbbang-config-key
+    location: file:///home/ubuntu/nbbang/key/nbbang-config.jks
     password: config-access
-#    location: file:///home/ubuntu/nbbang/key/nbbang-config.jks
-
-#  cloud:
-#    gateway:
-#      globalcors:
-#        corsConfigurations:
-#          '[/**]':
-#            allowedOrigins: "http://localhost:8800"
-#            allow-credentials: true
-#            allowedHeaders:
-#              - x-requested-with
-#              - authorization
-#              - content-type
-#              - credential
-#              - X-AUTH-TOKEN
-#              - X-CSRF-TOKEN
-#            allowedMethods:
-#              - POST
-#              - GET
-#              - PUT
-#              - DELETE
-#      routes:
-#        - id: nbbang-auth
-#          uri: http://localhost:9100
-#          predicates:
-#            - Path=/nbbang-auth/**
-#
-#        - id: nbbang-user
-#          uri: http://localhost:9000
-#          predicates:
-#            - Path=/nbbang-user/**
-#          filters:
-#            - AuthorizationHeaderFilter
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8900/eureka
-#
-#jwt:
-#  secret: sonchsonchsonchsonchsonchsonchsonchsonchsonchsonchsocnhsonchsoncohsconscn
+    alias: nbbang-config-key
