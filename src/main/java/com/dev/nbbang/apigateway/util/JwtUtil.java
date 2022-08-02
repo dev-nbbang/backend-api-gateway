@@ -25,6 +25,9 @@ public class JwtUtil {
         boolean isExpired = !isTokenExpired(token);
         result.put("memberId", extractAllClaims(token).get("memberId", String.class));
         result.put("isExpired", isExpired);
+        if(extractAllClaims(token).get("auth", String.class).equals("refresh")) {
+            throw new UnsupportedJwtException("RefreshToken");
+        }
         System.out.println("parseinfo in getuseroarseinfo: " + result);
         return result;
     }
