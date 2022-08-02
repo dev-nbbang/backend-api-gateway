@@ -2,6 +2,7 @@ package com.dev.nbbang.apigateway.filter;
 
 import com.dev.nbbang.apigateway.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,9 +4,9 @@ spring:
   application:
     name: nbbang-gateway, jwt-common
   profiles:
-    active: prod
+    active: local
   config:
-    import: optional:configserver:http://129.154.222.27:8197
+    import: optional:configserver:http://localhost:8197
   rabbitmq:
     host: 129.154.222.27
     port: 5672
@@ -24,8 +24,8 @@ management:
     gateway:
       enabled: true
 # KeyStore 복호화
-encrypt:
-  key-store:
-    location: file:///home/ubuntu/nbbang/key/nbbang-config.jks
-    password: config-access
-    alias: nbbang-config-key
+# encrypt:
+#   key-store:
+#     location: file:///home/ubuntu/nbbang/key/nbbang-config.jks
+#     password: config-access
+#     alias: nbbang-config-key
